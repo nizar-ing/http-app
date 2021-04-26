@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import "./App.css";
 
-axiox.interceptors.response.use(null, (error) => {
+axios.interceptors.response.use(null, (error) => {
   const hasExpectedError =
     error.response &&
     error.response.status >= 400 &&
