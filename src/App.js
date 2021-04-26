@@ -1,27 +1,30 @@
 import React, { Component } from "react";
-import "./App.css";
+import { ToastContainer } from "react-toastify";
 import http from "./services/httpService";
-const postsEndPoint = "https://jsonplaceholder.typicode.com/posts";
+import config from "./config.json";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
+
 class App extends Component {
   state = {
     posts: [],
   };
 
   async componentDidMount() {
-    const { data: posts } = await http.get(postsEndPoint);
+    const { data: posts } = await http.get(config.postsEndPoint);
     this.setState({ posts });
   }
 
   handleAdd = async () => {
     const obj = { title: "nizar lem3allam", body: "nizar becha" };
-    const { data: post } = await http.post(postsEndPoint, obj);
+    const { data: post } = await http.post(config.postsEndPoint, obj);
     const posts = [post, ...this.state.posts];
     this.setState({ posts });
   };
 
   handleUpdate = async (post) => {
     post.title = "UPDATED";
-    await http.put(`${postsEndPoint}/${post.id}`, post);
+    await http.put(`${config.postsEndPoint}/${post.id}`, post);
     const posts = [...this.state.posts];
     const index = posts.indexOf(post);
     posts[index] = { ...post };
@@ -33,7 +36,7 @@ class App extends Component {
     const posts = this.state.posts.filter((item) => item.id !== post.id);
     this.setState({ posts });
     try {
-      await http.delete(`${postsEndPoint}/${post.id}`);
+      await http.delete(`s${config.postsEndPoint}/${post.id}`);
       //throw new Error("");
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
@@ -46,6 +49,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
+        <ToastContainer />
         <button className='btn btn-primary mb-2' onClick={this.handleAdd}>
           Add
         </button>
