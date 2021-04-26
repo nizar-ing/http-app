@@ -36,7 +36,7 @@ class App extends Component {
     const posts = this.state.posts.filter((item) => item.id !== post.id);
     this.setState({ posts });
     try {
-      await http.delete(`s${config.postsEndPoint}/${post.id}`);
+      await http.delete(`${config.postsEndPoint}/${post.id}`);
       //throw new Error("");
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
